@@ -8,5 +8,9 @@
     "my-script": "echo Output of my-script"
   },
   "author": "Sven Eppler",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "package.json": "^2.0.1"
+  }
 }

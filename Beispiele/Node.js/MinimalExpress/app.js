@@ -13,6 +13,8 @@ router.get("/", (request, response) => {
   response.send("Hello World!");
 });
 
+router.get("/date/", (req,res) => res.send(new Date().toString()));
+
 // Tell the express app to use the router
 app.use('/', router);
 
