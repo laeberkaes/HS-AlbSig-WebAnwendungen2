@@ -1,4 +1,4 @@
-const { readFile, writeFile } = require("fs/promises");
+const { readFile, writeFile } = require("fs").promises;
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
