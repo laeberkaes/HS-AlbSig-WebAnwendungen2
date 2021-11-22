@@ -1,4 +1,4 @@
-const {readFile, writeFile} = require("fs").promises
+const { readFile, writeFile } = require("fs").promises;
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -22,18 +22,19 @@ app.post("/store", async (req, res) => {
     await writeFile(storageFilename, jsonString);
 
     return res.status(200).send();
-})
+});
 
 app.get("/load", async (req, res) => {
-    let jsonString = "[]"
+    let jsonString = "[]";
+
     try {
         jsonString = await readFile(storageFilename);
     }
-    catch (error) {
-
+    catch(error) {
+        // intentionally empty
     }
 
     return res.send(jsonString);
-})
+});
 
 module.exports = app;
