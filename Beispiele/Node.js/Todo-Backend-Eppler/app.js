@@ -15,8 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 let inMemoryStore = [];
 const storageFilename = "data.json";
 
-app.post("/store", async (req, res) =>
-{
+app.post("/store", async (req, res) => {
     const json = req.body;
 
     const jsonString = JSON.stringify(json);
@@ -25,16 +24,13 @@ app.post("/store", async (req, res) =>
     return res.status(200).send();
 });
 
-app.get("/load", async (req, res) =>
-{
+app.get("/load", async (req, res) => {
     let jsonString = "[]";
 
-    try
-    {
+    try {
         jsonString = await readFile(storageFilename);
     }
-    catch (error)
-    {
+    catch(error) {
         // intentionally empty
     }
 
