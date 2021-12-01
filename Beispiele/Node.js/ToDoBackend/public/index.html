@@ -59,7 +59,7 @@
             window.addEventListener("DOMContentLoaded", init)
 
             async function init() {
-                await loadTodoItemFromStorage();
+                await loadTodoItemFromBackend();
                 renderTodoList();
                 registerClickEventForSaveButton();   
             }
@@ -85,7 +85,7 @@
                 })
             }
 
-            function createNewTodoItem(newTodoText) {
+            function createNewTodoItem(todoItem) {
                 const newTodoItem = document.createElement("li");
                 newTodoItem.innerText = newTodoText;
                 newTodoItem.setAttribute("class", "list-group-item d-flex justify-content-between align-items-center")
@@ -94,7 +94,7 @@
                 deleteSpan.setAttribute("class", "badge bg-primary rounded-pill");
                 
                 deleteSpan.addEventListener("click", async () => {
-                    await deleteTodoItem(newTodoText);
+                    await deleteTodoItem(todoItem);
                     newTodoItem.remove();
                 });
 
@@ -109,14 +109,19 @@
             }
 
             async function storeNewTodoItem(todoItemText) {
-                todoModel.push(todoItemText);
+                const c = {
+                    id: Number.parseInt((Math.random() * 100000).toFixed(0)),
+                    text: todoItemText,
+                }
 
-                await sendTodoModelToBackend();
+                todoModel.push(newTodoItem);
+
+                await sendTodoItemToBackend(newTodoItem);
             }
 
             async function sendTodoModelToBackend() {
                 const todoModelAsJSON = JSON.stringify(todoModel)
-                await fetch("http://localhost:3000/store", {
+                await fetch("http://localhost:3000/v1/todos", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -125,15 +130,25 @@
                 });
             }
 
+            async function sendTodoItemToBackend(newTodoItem) {
+                await fetch("http://localhost:3000/v1/todos/"), {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json",
+                    },
+                    body: JSON.stringify(newTodoItem)
+                }
+            }
+
             async function deleteTodoItem(todoItemText) {
                 todoModel = todoModel.filter(item => item !== todoItemText); // Löscht Elemente aus Liste mit
 
                 await sendTodoModelToBackend();
             }
 
-            async function loadTodoItemFromStorage() {
+            async function loadTodoItemFromBackend() {
                 // const todoModelAsJSON = localStorage.getItem("todoStorage");
-                const response = await fetch("http://localhost:3000/load");
+                const response = await fetch("http://localhost:3000/v1/todos");
                 const todoModelAsJSON = await response.json();
                 if (todoModelAsJSON) {
                     todoModel = todoModelAsJSON;
@@ -149,7 +164,7 @@
                 clearTodoList()
 
                 todoModel.forEach((todoItem) => {
-                    const newTodoItem = createNewTodoItem(todoItem);
+                    const newTodoItem = createNewTodoItem(todoItem["text"]);
 
                     const todoList = document.getElementById("todoList");
                     todoList.append(newTodoItem)
