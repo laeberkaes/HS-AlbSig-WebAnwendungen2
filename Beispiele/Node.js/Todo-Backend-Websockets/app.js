@@ -12,6 +12,7 @@ var websocketServer = require('express-ws')(app);
 app.ws('/live-updates', function (ws, req) {
     console.log("New websocket client connected.");
 
+    // Cleint disconnected
     ws.on("close", () => console.log("Client disconnected"));
 });
 

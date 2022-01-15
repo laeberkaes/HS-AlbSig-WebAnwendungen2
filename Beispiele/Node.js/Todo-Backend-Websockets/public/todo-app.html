@@ -61,6 +61,7 @@
 
       function connectWebsocket() {
         const websocket = new WebSocket("ws://localhost:3000/live-updates");
+        // Gibt auch secure version mit wss://
         websocket.onclose = () => console.log("Websocket connection closed");
         websocket.onerror = () => console.log("Websocket error occured");
         websocket.onopen = () => console.log("Websocket connection established");
