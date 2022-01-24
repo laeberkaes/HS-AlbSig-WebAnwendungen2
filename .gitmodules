@@ -1,0 +1,3 @@
+[submodule "Beispiele/Node.js/ContactsAPI"]
+	path = Beispiele/Node.js/ContactsAPI
+	url = https://github.com/ghandmann/ContactsAPI.git

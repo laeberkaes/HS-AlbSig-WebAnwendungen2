@@ -22,8 +22,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-
 app.get("/v1/todos", async (req, res) => {
     const todoList = todoDb.prepare("SELECT * FROM todos").all();
 
